@@ -10,7 +10,7 @@
   (let ((res 0))
     (dolist (arg r)
       (incf res arg))
-  res))
+   res))
 
 (defun func (&key (k1 0) (k2 11)) ;ключевые аргументы
   (list k1 k2))
@@ -19,3 +19,8 @@
 (&OPTIONAL &REST &KEY &ALLOW-OTHER-KEYS)
 
 ;нежелетельно комбинировать необязательные и ключевые элементы
+
+(defun sum-n-2 (seq n &aux (res 0)) ;aux объявляет локальную переменную, всегда в конце
+  (dotimes (i n)
+    (incf res (elt seq i)))
+  res)

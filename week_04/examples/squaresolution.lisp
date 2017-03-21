@@ -1,0 +1,17 @@
+(defun square-eq-roots (a b c)
+  "функция возвращает список корней квадратного уравнения с коэффициентами a b c"
+  (if (= a 0)
+    (error "Не квадратное уравнение (a = 0)"))
+  (let* ((D (- (* b b) (* 4 a c)))
+         (x1 (/ (+ (- b) (sqrt D)) (* 2 a)))
+         (x2 (/ (- (- b) (sqrt D)) (* 2 a))))
+   (if (= x1 x2) (list x1) (list x1 x2))))
+
+(defun square-eq-roots-2 (a b c)
+  (labels ((discr (a b c)
+              (- (* b b) (* 4 a c)))
+           (root (a b c func)
+             (/ (funcall func (- b)
+                 (sqrt (discr a b c)))
+              (* 2 a))))
+   (list (root a b c #'+) (root a b c #'-))))
