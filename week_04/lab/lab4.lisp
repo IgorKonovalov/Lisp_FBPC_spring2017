@@ -37,8 +37,8 @@
     (if (and (ifinteger lst) (odd lst))
       (sum lst)
       (setf lst lst))
-    ((if (listp (car lst)) (flatten-odd (car lst)))
-     (if (listp (cdr lst)) (flatten-odd (cdr lst))))))
+    (cond
+      (()))))
 
 
 
