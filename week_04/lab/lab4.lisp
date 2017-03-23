@@ -5,22 +5,45 @@
 ; Дан список (0 1 nil (1 3 (1 3) 5) 6). Список (1 3) содержит только нечетные числа, поэтому он должен быть заменен на их сумму. Получаем список (0 1 nil (1 3 4 5) 6). Здесь больше нечего заменять, этот результат и выводится в стандартный поток вывода.
 
 
-(defvar temp '(0 1 nil (1 3 (1 3) 5) 6))
+(defparameter *temp* '(0 1 nil (1 3 (1 3) 5) 6))
 
 ;(defvar list (read))
 
+(defun ifatom (lst)
+  (cond
+    ((null lst) t)
+    ((not (atom (car lst))) nil)
+    (t (ifatom (cdr lst)))))
+
+(defun odd (lst)
+  (cond
+    ((null lst) t)
+    ((not (eq (mod (car lst) 2) 1)) nil)
+    (t (odd (cdr lst)))))
+
+(defun sum (lst)
+  (cond
+    ((null lst) 0)
+    (t (+ (car lst) (sum (cdr lst))))))
+
+(defun ifinteger (lst)
+  (cond
+   ((null lst) t)
+   ((not (integerp (car lst))) nil)
+   (t (ifinteger (cdr lst)))))
+
 (defun flatten-odd (lst)
-  (labels
-    ((sum (numb)
-      (cond
-        ((null numb) 0)
-        (t (+ (car numb) (sum (cdr numb))))))
-     (odd (lst)
-      (cond ((null lst) t)
-            ((not (eq (mod (car lst) 2) 1)) nil)
-            (t (odd (cdr lst))))))))  ;; ДОДЕЛАТЬ
+  (if (ifatom lst)
+    (if (and (ifinteger lst) (odd lst))
+      (sum lst)
+      (setf lst lst))
+    ((if (listp (car lst)) (flatten-odd (car lst)))
+     (if (listp (cdr lst)) (flatten-odd (cdr lst))))))
 
 
 
 
-(print (flatten-odd '(1 3 3 5))))
+
+;(print (flatten-odd *temp*))
+
+(print (flatten-odd '(1 3 (nil 5 5))))

@@ -31,7 +31,7 @@
 
 (defparameter *tree* '(42 (33 (10) (36)) (99)))
 
-(defun bst-preorder (tr)
+(defun bst-preorder (tr) ; обход дерева в прямом порядке 
   (if tr
     (format t "~a " (car tr)))
   (if (nth 1 tr) (bst-preorder (nth 1 tr)))
